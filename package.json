@@ -1,0 +1,59 @@
+{
+  "name": "@fundarealestate/template-js-package",
+  "description": "template for a JS package with build and semantic release",
+  "version": "0.0.0",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": "github:fundarealestate/template-js-package",
+  "license": "UNLICENSED",
+  "main": "./dist/example-package.umd.js",
+  "module": "./dist/example-package.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/example-package.es.js",
+      "require": "./dist/example-package.umd.js"
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "prepublishOnly": "npm run build",
+    "link-local": "npm run build && npm link",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
+    "@funda/eslint-config": "^1.0.0",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/commit-analyzer": "^9.0.1",
+    "@semantic-release/git": "^10.0.0",
+    "@semantic-release/npm": "^8.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.2",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
+    "jest": "^27.3.1",
+    "prettier": "^2.3.1",
+    "semantic-release": "^18.0.0",
+    "vite": "^2.6.7"
+  },
+  "engines": {
+    "node": "^14.17.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json}": "eslint --fix"
+  }
+}
