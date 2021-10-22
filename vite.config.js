@@ -4,9 +4,9 @@ import { defineConfig } from 'vite';
 export default defineConfig({
     build: {
         lib: {
-            entry: path.resolve(__dirname, 'src/lib/example-package.js'),
-            name: 'ExamplePackage',
-            fileName: (format) => `example-package.${format}.js`,
+            entry: path.resolve(__dirname, 'src/index.ts'),
+            name: 'StorybookWrapper',
+            fileName: (format) => `storybook-wrapper.${format}.js`,
         }
     },
 });

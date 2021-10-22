@@ -1,22 +1,22 @@
 {
-  "name": "@fundarealestate/template-js-package",
-  "description": "template for a JS package with build and semantic release",
+  "name": "@funda/storybook-wrapper-helper",
+  "description": "storybook warpper helper",
   "version": "0.0.0",
   "files": [
     "dist",
     "README.md"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
-  "repository": "github:fundarealestate/template-js-package",
-  "license": "UNLICENSED",
-  "main": "./dist/example-package.umd.js",
-  "module": "./dist/example-package.es.js",
+  "repository": "github:funda-frontend/storybook-wrapper-helper",
+  "license": "MIT",
+  "main": "./dist/storybook-wrapper.umd.js",
+  "module": "./dist/storybook-wrapper.es.js",
   "exports": {
     ".": {
-      "import": "./dist/example-package.es.js",
-      "require": "./dist/example-package.umd.js"
+      "import": "./dist/storybook-wrapper.es.js",
+      "require": "./dist/storybook-wrapper.umd.js"
     }
   },
   "scripts": {
