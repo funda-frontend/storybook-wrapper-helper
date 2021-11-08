@@ -1,3 +1,4 @@
+/* global __dirname */
 const path = require('path');
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
