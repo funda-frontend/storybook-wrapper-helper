@@ -7,5 +7,5 @@
  * For small projects you could put all your code right in this file.
  */
 
-export * from "./lib";
+export * from './lib';
 export default undefined;

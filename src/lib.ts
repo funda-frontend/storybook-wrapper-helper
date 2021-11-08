@@ -1,41 +1,41 @@
 type AnyObject = {
-  [x: string]: any;
+    [x: string]: any;
 };
 
 enum LayoutOptions {
-  Centered = "centered",
-  FullScreen = "fullscreen",
+    Centered = 'centered',
+    FullScreen = 'fullscreen',
 }
 
 interface StoryParameters {
-  layout: LayoutOptions;
+    layout: LayoutOptions;
 }
 
 interface PageConfigurationProps {
-  defaultParameters?: StoryParameters;
-  [x: string]: any;
+    defaultParameters?: StoryParameters;
+    [x: string]: any;
 }
 
 function addPageConfigurationValues(config: PageConfigurationProps) {
-  // pages should not have a padding around the edge to more closely represent
-  // what the page is going to look like. This can be overwritten at the story
-  // level.
-  config.defaultParameters = { layout: LayoutOptions.FullScreen };
-  return config;
+    // pages should not have a padding around the edge to more closely represent
+    // what the page is going to look like. This can be overwritten at the story
+    // level.
+    config.defaultParameters = { layout: LayoutOptions.FullScreen };
+    return config;
 }
 
 function isInPageFolder(title: string) {
-  return title.toLowerCase().slice(0, 4) === "page";
+    return title.toLowerCase().slice(0, 4) === 'page';
 }
 
 type VueComponent = {
-  [x: string]: any;
+    [x: string]: any;
 };
 
 interface BookProps {
-  title: string;
-  component: VueComponent;
-  [x: string]: any;
+    title: string;
+    component: VueComponent;
+    [x: string]: any;
 }
 
 /**
@@ -47,28 +47,28 @@ interface BookProps {
  *        a single component here (eg. { TestComponent })
  */
 export function book({ title, component, ...other }: BookProps) {
-  const componentName = Object.keys(component)[0];
-  const componentObject = Object.values(component)[0];
-  let config: PageConfigurationProps = {
-    title,
-    component: componentObject,
-    componentName,
-    ...other,
-  };
-  if (isInPageFolder(title)) {
-    config = addPageConfigurationValues(config);
-  }
-  return config;
+    const componentName = Object.keys(component)[0];
+    const componentObject = Object.values(component)[0];
+    let config: PageConfigurationProps = {
+        title,
+        component: componentObject,
+        componentName,
+        ...other,
+    };
+    if (isInPageFolder(title)) {
+        config = addPageConfigurationValues(config);
+    }
+    return config;
 }
 
 interface StoryProps {
-  component?: AnyObject;
-  additionalComponents?: AnyObject;
-  args?: AnyObject;
-  componentName?: string;
-  parameters?: AnyObject;
-  template?: string;
-  [x: string]: any;
+    component?: AnyObject;
+    additionalComponents?: AnyObject;
+    args?: AnyObject;
+    componentName?: string;
+    parameters?: AnyObject;
+    template?: string;
+    [x: string]: any;
 }
 
 /**
@@ -90,48 +90,48 @@ interface StoryProps {
  * @returns An object that storybook requires to create a story
  */
 export function story({
-  additionalComponents,
-  args,
-  component,
-  componentName,
-  parameters,
-  template,
-  ...other
-}: StoryProps) {
-  // if a name is provided for the component that is being tested, we can
-  // provide some sensible defaults that can reduce the repetitiveness of
-  // setting up a story
-  if (componentName) {
-    // we know every story is going to include the component that we are
-    // testing. (eg. components: { ComponentName })
-    const testingComponent = { [componentName]: component };
-    // always allow the user to overwrite on a story by story basis
-    other.components = { ...testingComponent, ...additionalComponents };
-
-    // if a story level template is not provided, or a defaultTemplate at
-    // the defaultStory level, then we can assume the user just wants to
-    // include the component on its own and bind any props.
-    template = template || `<${componentName} v-bind="$props" />`;
-  }
-
-  const StoryTemplate = (_, { argTypes }) => ({
-    props: Object.keys(argTypes),
-    components: other.components,
+    additionalComponents,
+    args,
+    component,
+    componentName,
+    parameters,
     template,
-    ...other,
-  });
-  const storyExport: any = StoryTemplate.bind({});
-  storyExport.args = args;
-  storyExport.parameters = parameters;
-  return storyExport;
+    ...other
+}: StoryProps) {
+    // if a name is provided for the component that is being tested, we can
+    // provide some sensible defaults that can reduce the repetitiveness of
+    // setting up a story
+    if (componentName) {
+        // we know every story is going to include the component that we are
+        // testing. (eg. components: { ComponentName })
+        const testingComponent = { [componentName]: component };
+        // always allow the user to overwrite on a story by story basis
+        other.components = { ...testingComponent, ...additionalComponents };
+
+        // if a story level template is not provided, or a defaultTemplate at
+        // the defaultStory level, then we can assume the user just wants to
+        // include the component on its own and bind any props.
+        template = template || `<${componentName} v-bind="$props" />`;
+    }
+
+    const StoryTemplate = (_, { argTypes }) => ({
+        props: Object.keys(argTypes),
+        components: other.components,
+        template,
+        ...other,
+    });
+    const storyExport: any = StoryTemplate.bind({});
+    storyExport.args = args;
+    storyExport.parameters = parameters;
+    return storyExport;
 }
 
 interface DefaultStoryProps {
-  defaultArgs: AnyObject;
-  defaultComponents: AnyObject;
-  defaultParameters: StoryParameters;
-  defaultTemplate: string;
-  [x: string]: any;
+    defaultArgs: AnyObject;
+    defaultComponents: AnyObject;
+    defaultParameters: StoryParameters;
+    defaultTemplate: string;
+    [x: string]: any;
 }
 
 /**
@@ -155,17 +155,17 @@ interface DefaultStoryProps {
  * @returns A function that generates a story.
  */
 export function defaultStory({
-  defaultArgs,
-  defaultComponents,
-  defaultParameters,
-  defaultTemplate,
-  ...args
+    defaultArgs,
+    defaultComponents,
+    defaultParameters,
+    defaultTemplate,
+    ...args
 }: DefaultStoryProps) {
-  return story({
-    ...args,
-    args: { ...defaultArgs, ...args.args },
-    components: { ...defaultComponents, ...args.components },
-    parameters: { ...defaultParameters, ...args.parameters },
-    template: args.template || defaultTemplate,
-  });
+    return story({
+        ...args,
+        args: { ...defaultArgs, ...args.args },
+        components: { ...defaultComponents, ...args.components },
+        parameters: { ...defaultParameters, ...args.parameters },
+        template: args.template || defaultTemplate,
+    });
 }
