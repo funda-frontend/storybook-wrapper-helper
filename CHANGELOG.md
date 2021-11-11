@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/funda-frontend/storybook-wrapper-helper/compare/v1.0.0...v1.1.0) (2021-11-11)
+
+
+### Features
+
+* generate type definition files ([a7b65cf](https://github.com/funda-frontend/storybook-wrapper-helper/commit/a7b65cf858943fcbe3ef98323b01d95cfb02fdbc))
+
 # 1.0.0 (2021-10-22)
 
 
