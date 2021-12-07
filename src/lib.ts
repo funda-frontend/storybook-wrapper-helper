@@ -33,29 +33,28 @@ type VueComponent = {
 };
 
 interface BookProps {
-    title: string;
     component: VueComponent;
+    title?: string;
     [x: string]: any;
 }
 
 /**
  * Generates the settings needed to create a book and settings to be passed
  * into a story or default story function.
- * @param {String} props.title - A string that configures the organizational
- *        structure for your story
+ * @param {String} props.title - An optional string that configures the
+ *        organizational structure for your story
  * @param {Object} props.component - The component you will be testing. Only add
  *        a single component here (eg. { TestComponent })
  */
-export function book({ title, component, ...other }: BookProps) {
+export function book({ component, ...other }: BookProps) {
     const componentName = Object.keys(component)[0];
     const componentObject = Object.values(component)[0];
     let config: PageConfigurationProps = {
-        title,
         component: componentObject,
         componentName,
         ...other,
     };
-    if (isInPageFolder(title)) {
+    if (other?.title && isInPageFolder(other.title)) {
         config = addPageConfigurationValues(config);
     }
     return config;
