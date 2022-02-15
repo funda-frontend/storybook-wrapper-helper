@@ -28,6 +28,7 @@ export interface StoryProps extends Partial<StoryTemplate> {
     component?: AnyObject;
     additionalComponents?: VueComponents;
     args?: AnyObject;
+    events?: Array<string>;
     decorators?: Array<() => StoryTemplate>;
     componentName?: string;
     parameters?: StoryParameters;
