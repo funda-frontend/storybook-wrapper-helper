@@ -7,12 +7,23 @@ enum LayoutOptions {
     FullScreen = 'fullscreen',
 }
 
+interface SelectOption {
+    name: string;
+    value: string;
+}
+
+interface BackgroundOptions {
+    default: string;
+    values: Array<SelectOption>;
+}
+
 interface StoryTemplate {
     template: string;
 }
 
 interface StoryParameters {
     layout: LayoutOptions;
+    backgrounds?: BackgroundOptions;
 }
 
 interface PageConfigurationProps {
@@ -70,7 +81,7 @@ interface StoryProps extends Partial<StoryTemplate> {
     args?: AnyObject;
     decorators?: Array<() => StoryTemplate>;
     componentName?: string;
-    parameters?: AnyObject;
+    parameters?: StoryParameters;
     [x: string]: any;
 }
 
