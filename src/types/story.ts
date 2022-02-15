@@ -35,9 +35,9 @@ export interface StoryProps extends Partial<StoryTemplate> {
 }
 
 export interface DefaultStoryProps {
-    defaultArgs: AnyObject;
+    defaultArgs?: AnyObject;
     defaultComponents: VueComponent;
-    defaultParameters: StoryParameters;
-    defaultTemplate: string;
+    defaultParameters?: StoryParameters;
+    defaultTemplate?: string;
     [x: string]: any;
 }
