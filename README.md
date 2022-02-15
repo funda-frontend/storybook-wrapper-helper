@@ -155,6 +155,16 @@ developers consuming this package. Even if you are not using TypeScript in your
 project, editors like VSCode include the ability to enable type checking in
 normal JS files.
 
+While storybook does have
+[some TypeScript support](https://storybook.js.org/docs/vue/configure/typescript)
+for the components that you are testing, there seems to be no complete
+TypeScript definition for the interface that defines stories in
+`@storybook/vue`. Ideally, this project imports types from the
+`@storybook/vue` and/or `@storybook/csf` packages and extends them to fit the
+needs of this wrapper, but for now, the plan is to define all types here until
+the API has been proven to work in a variety of situations across several Funda
+applications.
+
 ## Getting started
 
 - `npm install`
