@@ -23,6 +23,19 @@ function isInPageFolder(title: string) {
     return title.toLowerCase().slice(0, 4) === 'page';
 }
 
+function generateTemplate({
+    componentName,
+    events,
+}: {
+    componentName: string;
+    events: Array<string>;
+}): string {
+    const eventsString = events
+        .map((event) => `@${event}="${event}"`)
+        .join(' ');
+    return `<${componentName} v-bind="$props" ${eventsString} />`;
+}
+
 /**
  * Generates the settings needed to create a book and settings to be passed
  * into a story or default story function.
@@ -31,7 +44,7 @@ function isInPageFolder(title: string) {
  * @param {Object} props.component - The component you will be testing. Only add
  *        a single component here (eg. { TestComponent })
  */
-export function book({ component, ...other }: BookProps) {
+export function book({ component, events, ...other }: BookProps) {
     const componentName = Object.keys(component)[0];
     const componentObject = Object.values(component)[0];
     let config: PageConfigurationProps = {
@@ -42,6 +55,12 @@ export function book({ component, ...other }: BookProps) {
     if (other?.title && isInPageFolder(other.title)) {
         config = addPageConfigurationValues(config);
     }
+
+    // binding events
+    events?.forEach((event) => {
+        other.argTypes[event] = { action: `${event}` };
+    });
+
     return config;
 }
 
@@ -66,6 +85,7 @@ export function book({ component, ...other }: BookProps) {
 export function story({
     additionalComponents,
     args,
+    events,
     component,
     componentName,
     decorators,
@@ -86,7 +106,7 @@ export function story({
         // if a story level template is not provided, or a defaultTemplate at
         // the defaultStory level, then we can assume the user just wants to
         // include the component on its own and bind any props.
-        template = template || `<${componentName} v-bind="$props" />`;
+        template = template || generateTemplate({ componentName, events });
     }
 
     const StoryTemplate = (_, { argTypes }) => ({
