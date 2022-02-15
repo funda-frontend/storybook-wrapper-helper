@@ -7,6 +7,10 @@ enum LayoutOptions {
     FullScreen = 'fullscreen',
 }
 
+interface StoryTemplate {
+    template: string;
+}
+
 interface StoryParameters {
     layout: LayoutOptions;
 }
@@ -60,13 +64,13 @@ export function book({ component, ...other }: BookProps) {
     return config;
 }
 
-interface StoryProps {
+interface StoryProps extends Partial<StoryTemplate> {
     component?: AnyObject;
     additionalComponents?: AnyObject;
     args?: AnyObject;
+    decorators?: Array<() => StoryTemplate>;
     componentName?: string;
     parameters?: AnyObject;
-    template?: string;
     [x: string]: any;
 }
 
@@ -93,6 +97,7 @@ export function story({
     args,
     component,
     componentName,
+    decorators,
     parameters,
     template,
     ...other
@@ -121,6 +126,7 @@ export function story({
     });
     const storyExport: any = StoryTemplate.bind({});
     storyExport.args = args;
+    storyExport.decorators = decorators;
     storyExport.parameters = parameters;
     return storyExport;
 }
