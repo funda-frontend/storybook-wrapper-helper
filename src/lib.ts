@@ -1,30 +1,10 @@
-type AnyObject = {
-    [x: string]: any;
-};
-
-enum LayoutOptions {
-    Centered = 'centered',
-    FullScreen = 'fullscreen',
-}
-
-interface SelectOption {
-    name: string;
-    value: string;
-}
-
-interface BackgroundOptions {
-    default: string;
-    values: Array<SelectOption>;
-}
-
-interface StoryTemplate {
-    template: string;
-}
-
-interface StoryParameters {
-    layout: LayoutOptions;
-    backgrounds?: BackgroundOptions;
-}
+import {
+    BookProps,
+    DefaultStoryProps,
+    LayoutOptions,
+    StoryParameters,
+    StoryProps,
+} from './types';
 
 interface PageConfigurationProps {
     defaultParameters?: StoryParameters;
@@ -41,16 +21,6 @@ function addPageConfigurationValues(config: PageConfigurationProps) {
 
 function isInPageFolder(title: string) {
     return title.toLowerCase().slice(0, 4) === 'page';
-}
-
-type VueComponent = {
-    [x: string]: any;
-};
-
-interface BookProps {
-    component: VueComponent;
-    title?: string;
-    [x: string]: any;
 }
 
 /**
@@ -73,16 +43,6 @@ export function book({ component, ...other }: BookProps) {
         config = addPageConfigurationValues(config);
     }
     return config;
-}
-
-interface StoryProps extends Partial<StoryTemplate> {
-    component?: AnyObject;
-    additionalComponents?: AnyObject;
-    args?: AnyObject;
-    decorators?: Array<() => StoryTemplate>;
-    componentName?: string;
-    parameters?: StoryParameters;
-    [x: string]: any;
 }
 
 /**
@@ -140,14 +100,6 @@ export function story({
     storyExport.decorators = decorators;
     storyExport.parameters = parameters;
     return storyExport;
-}
-
-interface DefaultStoryProps {
-    defaultArgs: AnyObject;
-    defaultComponents: AnyObject;
-    defaultParameters: StoryParameters;
-    defaultTemplate: string;
-    [x: string]: any;
 }
 
 /**
