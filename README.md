@@ -12,11 +12,15 @@ This makes stories look more cohesive and reduces distractions for a book (a
 collection of stories) where most of the stories have their own templates and
 args.
 
-Storybook stories will also go through breaking changes between Vue v2 and
-Vue v3. While updating a single story through a breaking change is a trivial
-task, reformatting the arguments for every story written, would take a lot of
-time. This should allow us to move through the breaking change by only
-changing the function that generates a story.
+Storybook stories will also go through improvements between Story Component
+Format (SCF) v2 SCF v3, and breaking changes between Vue v2 and Vue v3.
+While updating a single story through a breaking change is a trivial
+task, reformatting every story written, would take a lot of
+time. This should allow us to move through the breaking changes by only
+changing the internals of a function that generates a story.
+
+For more information on why this will still be relevant for the forseeable
+future, please read the [roadmap](./ROADMAP.md).
 
 ## Usage
 
@@ -83,7 +87,11 @@ function uploadButtonStory(args) {
         // whatever you add here will always be included, but can be overwritten
         // by the 'args' key
         defaultArgs: {
+            uploadText: 'Upload a file',
+            errorMessage: '',
             accept: '*',
+            multiple: false,
+            showFileNames: false,
         },
         ...args,
     });
@@ -126,7 +134,7 @@ export const ShowFileNames = uploadButtonStory({
 
 ```
 
-## Automatic features
+### Automatic features
 
 If you specify a book that has a title that starts with `page` (case
 insensitive), the layout of the story will be fullscreen to closer emulate
@@ -136,10 +144,18 @@ overwritten at the story level.
 ```js
 const bookSettings = book({
     title: 'Page/Home',
+    component: { ... }
 });
 ```
 
-# Getting started
+### Typescript
+
+This project is written in TypeScript, which provides helpful hints to
+developers consuming this package. Even if you are not using TypeScript in your
+project, editors like VSCode include the ability to enable type checking in
+normal JS files.
+
+## Getting started
 
 - `npm install`
 - `npm run build` (if you want to check the build output)
@@ -147,9 +163,9 @@ const bookSettings = book({
 The directory `src/lib` is where you will spend most of your time.
 All remaining directories are just there to help you focus on building the component in an efficient way.
 
-# Contributing
+## Contributing
 
-## How to push your changes
+### How to push your changes
 
 This repo uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) and uses [commitlint](https://github.com/conventional-changelog/commitlint) to enforce it. This means that you need to follow a set of rules otherwise you don't be able to commit. This is required for automating the release of the package.
 
@@ -161,18 +177,18 @@ Examples of commit messages:
 PS: It is recommended to use the terminal for commit, if you use any GUI it might be necessary to update you local variable PATH on your GUI.
 Reference: [Husky issues](https://typicode.github.io/husky/#/?id=command-not-found)
 
-## Releasing a new version
+### Releasing a new version
 
 This project uses [semantic-release](https://semantic-release.gitbook.io/semantic-release/) a tool that will automatically releases, increment the package version and generate a changelog entry based on the new commits.
 Simply following the commitlint standard and merging your changes into main will release the project.
 
-# Consuming the package locally
+## Consuming the package locally
 
 If don't want to publish a new version and you just want to test it locally you can use `npm run link-local` on the package and then `npm link @fundarealestate/fuic-template` on the project.
 
 Keep in mind that some tools don't understand file symlink (what npm link uses) and that can cause problems.
 
-# Ownership
+## Ownership
 
 This codebase is owned by **FE Cluster**
 
