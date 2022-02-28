@@ -1,8 +1,25 @@
-import { AnyObject, VueComponent, VueComponents } from '.';
+import { AnyObject, VueComponent, VueComponents, VuexStore } from '.';
 
 export enum LayoutOptions {
     Centered = 'centered',
     FullScreen = 'fullscreen',
+}
+
+export enum ControlTypes {
+    Boolean = 'boolean',
+    Number = 'number',
+    Range = 'range',
+    Object = 'object',
+    File = 'file',
+    Radio = 'radio',
+    Check = 'check',
+    Select = 'select',
+    Text = 'text',
+    Color = 'color',
+    Date = 'date',
+    InlineRadio = 'inline-radio',
+    InlineCheck = 'inline-check',
+    MultiSelect = 'multi-select',
 }
 
 export interface SelectOption {
@@ -10,35 +27,64 @@ export interface SelectOption {
     value: string;
 }
 
-export interface BackgroundOptions {
-    default: string;
-    values: Array<SelectOption>;
+export interface ArgTypes {
+    [x: string]: ArgTypeContents;
 }
 
+export interface ArgTypeContents extends ParameterDescriptionProps {
+    control?: ArgTypeControl;
+}
+
+export interface ArgTypeControl {
+    type: ControlTypes;
+    min?: number;
+    max?: number;
+    step?: number;
+}
+export interface BackgroundOptions {
+    default: string;
+    values?: Array<SelectOption>;
+}
+
+export interface ParameterDescriptionProps {
+    component?: string;
+}
+
+export interface ParameterDocsProps {
+    description?: ParameterDescriptionProps;
+}
 export interface StoryParameters {
-    layout: LayoutOptions;
+    layout?: LayoutOptions;
     backgrounds?: BackgroundOptions;
+    docs?: ParameterDocsProps;
 }
 
 export interface StoryTemplate {
     template: string;
 }
 
-export interface StoryProps extends Partial<StoryTemplate> {
-    component?: AnyObject;
+export interface StoryFunctionProps extends Partial<StoryTemplate> {
+    argTypes?: ArgTypes;
+    component?: VueComponent;
     additionalComponents?: VueComponents;
     args?: AnyObject;
     events?: Array<string>;
     decorators?: Array<() => StoryTemplate>;
     componentName?: string;
     parameters?: StoryParameters;
-    [x: string]: any;
+    store?: VuexStore;
 }
 
-export interface DefaultStoryProps {
+export interface DefaultStoryProps extends StoryFunctionProps {
     defaultArgs?: AnyObject;
-    defaultComponents: VueComponent;
     defaultParameters?: StoryParameters;
     defaultTemplate?: string;
-    [x: string]: any;
+}
+
+export interface StoryProps
+    extends Exclude<
+        StoryFunctionProps,
+        'component' | 'componentName' | 'additionalComponents'
+    > {
+    components: VueComponents;
 }
