@@ -55,7 +55,7 @@
     "vite-plugin-dts": "^0.9.3"
   },
   "engines": {
-    "node": "^14.17.0"
+    "node": ">=14 <18"
   },
   "lint-staged": {
     "src/*.{js,ts,json}": "eslint --cache --fix"
