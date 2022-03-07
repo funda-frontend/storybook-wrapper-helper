@@ -134,6 +134,67 @@ export const ShowFileNames = uploadButtonStory({
 
 ```
 
+### A full example
+
+This is an example of a component that makes use of every option in the `story`
+function configuration.
+
+```js
+import { story, book } from '@funda/storybook-config';
+
+// import your component that you are going to test
+import SaveBox from '../SaveBox.vue';
+import SuccessNotification from '../SuccessNotification.vue';
+
+const bookSettings = book({
+    // define the folder structure for your component
+    title: 'Advertisement/Create/Save Box',
+    component: { SaveBox },
+    // when @close and @save are triggered, it will be logged in the actions pane
+    events: ['close', 'save']
+});
+
+export default bookSettings;
+
+export const Default = story({
+    // all of the work that the book function does for you is included here
+    ...bookSettings,
+    // arguments for our component
+    args: {
+        disabled: false,
+        canBuy: false,
+        waiting: false,
+    },
+    // allow us to use the SuccessNotification in our custom template
+    additionalComponents: { SuccessNotification },
+    description: 'A custom description for this component',
+    // wrap our story in some custom div that constrains the max width
+    decorators: [
+      () => ({ template: '<div style="max-width: 800px;"><story/></div>' }),
+    ],
+    // set our background color to a custom shade of blue
+    parameters: {
+      backgrounds: {
+        default: 'custom-blue',
+        values: [
+            {
+                name: 'custom-blue',
+                value: '#139ec1'
+            }
+        ]
+      },
+    },
+    // include our SuccessNotification, overriding the default slot in our
+    // SaveBox component. Note that the props and actions must be bound in this
+    // template or you will disconnect them from the story.
+    template: `
+      <SaveBox v-bind="$props" @close="close" @save="save">
+        <SuccessNotification>You did it!</SuccessNotification>
+      </SaveBox>
+    `
+});
+```
+
 ### Automatic features
 
 If you specify a book that has a title that starts with `page` (case
