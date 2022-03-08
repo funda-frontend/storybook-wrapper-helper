@@ -1,16 +1,30 @@
-import { AnyObject, StoryParameters, StoryFunctionProps } from '.';
+import {
+    AnyObject,
+    CustomWrapperProps,
+    StoryFunctionProps,
+    StoryParameters,
+    VueComponent,
+} from '.';
 
-export type VueComponent = {
-    [x: string]: any;
-};
+export interface ParameterBookDescriptionProps {
+    component?: string;
+}
 
-export type VueComponents = VueComponent;
+export interface ParameterBookDocsProps {
+    description?: ParameterBookDescriptionProps;
+}
 
+export interface BookParameters
+    extends Pick<StoryParameters, 'layout' | 'backgrounds'> {
+    componentSubtitle?: string;
+    docs?: ParameterBookDocsProps;
+}
 export interface BookProps
-    extends Pick<StoryFunctionProps, 'events' | 'decorators'> {
+    extends CustomWrapperProps,
+        Partial<StoryFunctionProps> {
     component: VueComponent;
     title?: string;
     // since we have a fallback layout, no need to make the layout optional
-    parameters?: Partial<StoryParameters>;
+    parameters?: BookParameters;
     argTypes?: AnyObject;
 }

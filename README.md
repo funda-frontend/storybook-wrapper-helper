@@ -74,6 +74,7 @@ import UiUploadButton from '../UiUploadButton.vue';
 const bookSettings = book({
     title: 'UI/Buttons/Upload',
     component: { UiUploadButton },
+    description: 'A generic upload button',
 });
 
 export default bookSettings;
@@ -105,11 +106,13 @@ function uploadButtonStory(args) {
 
 export const Default = uploadButtonStory();
 export const DifferentUploadText = uploadButtonStory({
+    description: 'An upload button that suggests the user add an image',
     args: {
         uploadText: 'Add an image',
     },
 });
 export const DifferentUploadValidation = uploadButtonStory({
+    description: 'An upload button that allows any kind of video type',
     args: {
         accept: 'video/*',
         uploadText: 'Add a video',
@@ -121,6 +124,7 @@ export const Error = uploadButtonStory({
     },
 });
 export const MultipleSelection = uploadButtonStory({
+    description: 'An upload button that allows the user to upload more than one thing',
     args: {
         multiple: true,
     },
@@ -151,7 +155,14 @@ const bookSettings = book({
     title: 'Advertisement/Create/Save Box',
     component: { SaveBox },
     // when @close and @save are triggered, it will be logged in the actions pane
-    events: ['close', 'save']
+    events: ['close', 'save'],
+    description: "A save box for an advertisement",
+    links: [
+      {
+        name: "Design",
+        value: "https://figma.com/your-project/advertisement/design/document"
+      },
+    ],
 });
 
 export default bookSettings;

@@ -1,8 +1,11 @@
 import {
+    BookParameters,
     BookProps,
     DefaultStoryProps,
     LayoutOptions,
+    SelectOption,
     StoryFunctionProps,
+    StoryParameters,
     StoryProps,
 } from './types';
 
@@ -30,6 +33,17 @@ function generateTemplate({
     return `<${componentName} v-bind="$props" ${eventsString} />`;
 }
 
+function markdownLinks(links: Array<SelectOption>): string {
+    const linksHeader = '\n### Links\n';
+    const linksBody = links
+        .map(
+            (link) =>
+                `* <a href="${link.value}" target="_blank">${link.name}</a>`
+        )
+        .join('\n');
+    return linksHeader + linksBody;
+}
+
 /**
  * Generates the settings needed to create a book and settings to be passed
  * into a story or default story function.
@@ -42,10 +56,31 @@ export function book({
     component,
     events,
     argTypes = {},
+    description,
+    links,
     ...other
 }: BookProps): StoryFunctionProps {
     const componentName = Object.keys(component)[0];
     const componentObject = Object.values(component)[0];
+
+    // add book level description while taking care to not override other values
+    // that might be set in the parameters object
+    if (description) {
+        if (links) {
+            description += markdownLinks(links);
+        }
+
+        other.parameters = {
+            ...other.parameters,
+            docs: {
+                ...other?.parameters?.docs,
+                description: {
+                    ...other?.parameters?.docs?.description,
+                    component: description,
+                },
+            },
+        };
+    }
 
     // default parameter configuration
     if (other?.title && isInPageFolder(other.title)) {
@@ -100,9 +135,28 @@ export function storyFunctionPropsToStoryProps({
                 events: props.events || [],
             });
     }
+
+    let parameters: StoryParameters = {};
+    if (props.description) {
+        if (props.links) {
+            props.description += markdownLinks(props.links);
+        }
+
+        parameters = {
+            ...props.parameters,
+            docs: {
+                ...props?.parameters?.docs,
+                description: {
+                    ...props?.parameters?.docs?.description,
+                    story: props.description,
+                },
+            },
+        };
+    }
+
     // do not pass along the componentName and component values as they are
     // now included in `components`
-    return { ...props, components };
+    return { ...props, components, parameters };
 }
 
 /**
@@ -167,14 +221,17 @@ export function defaultStory({
     template,
     ...other
 }: DefaultStoryProps) {
-    return story({
+    const options: StoryFunctionProps = {
         ...other,
         // use default args and overwrite with supplied args
         args: { ...defaultArgs, ...args },
-        // use default parameters and overwrite with supplied args
-        parameters: { ...defaultParameters, ...parameters },
+        // use default parameters and overwrite with supplied args.
+        // it is alright if the StoryParameters make it into the BookParameters
+        // here. Storybook will ignore improper API usage.
+        parameters: { ...defaultParameters, ...parameters } as BookParameters,
         // use arg template and fallback to default template if args.template
         // not supplied
         template: template || defaultTemplate,
-    });
+    };
+    return story(options);
 }
