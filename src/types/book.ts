@@ -21,8 +21,15 @@ export interface BookParameters
 }
 export interface BookProps
     extends CustomWrapperProps,
-        Partial<StoryFunctionProps> {
+        Omit<Partial<StoryFunctionProps>, 'decorators'> {
     component: VueComponent;
+    // since we pass the results of the book function into the story functions,
+    // storybook will think that we would like the decorator to be applied both
+    // at the book and story level. If we pass in an array of strings, for our
+    // decorators, we can have a more simple interface for our developers, while
+    // also being able to determine which decorators are passed in at the story
+    // level versus the book level.
+    decorators?: Array<string>;
     title?: string;
     // since we have a fallback layout, no need to make the layout optional
     parameters?: BookParameters;

@@ -163,6 +163,8 @@ const bookSettings = book({
         value: "https://figma.com/your-project/advertisement/design/document"
       },
     ],
+    // add a little bit of margin around all our stories
+    decorators: ['<div class="m-3"><story/></div>'],
 });
 
 export default bookSettings;
@@ -179,10 +181,8 @@ export const Default = story({
     // allow us to use the SuccessNotification in our custom template
     additionalComponents: { SuccessNotification },
     description: 'A custom description for this component',
-    // wrap our story in some custom div that constrains the max width
-    decorators: [
-      () => ({ template: '<div style="max-width: 800px;"><story/></div>' }),
-    ],
+    // wrap this story in a custom div that constrains the max width
+    decorators: ['<div style="max-width: 800px;"><story/></div>'],
     // set our background color to a custom shade of blue
     parameters: {
       backgrounds: {
