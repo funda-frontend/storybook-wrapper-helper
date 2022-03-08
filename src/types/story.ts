@@ -64,13 +64,15 @@ export interface StoryTemplate {
     template: string;
 }
 
+export type Decorator = () => StoryTemplate;
+
 export interface StoryFunctionProps
     extends Partial<StoryTemplate>,
         CustomWrapperProps {
     argTypes?: ArgTypes;
     additionalComponents?: VueComponents;
     args?: AnyObject;
-    decorators?: Array<() => StoryTemplate>;
+    decorators?: Array<Decorator> | Array<string>;
     componentName?: string;
     parameters?: BookParameters;
     store?: VuexStore;

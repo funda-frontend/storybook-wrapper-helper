@@ -1,6 +1,7 @@
 import {
     BookParameters,
     BookProps,
+    Decorator,
     DefaultStoryProps,
     LayoutOptions,
     SelectOption,
@@ -44,6 +45,13 @@ function markdownLinks(links: Array<SelectOption>): string {
     return linksHeader + linksBody;
 }
 
+// transform a string generator into the template storybook requires
+function generateDecorator(decoratorString) {
+    return () => ({
+        template: decoratorString,
+    });
+}
+
 /**
  * Generates the settings needed to create a book and settings to be passed
  * into a story or default story function.
@@ -57,11 +65,19 @@ export function book({
     events,
     argTypes = {},
     description,
+    decorators,
     links,
     ...other
 }: BookProps): StoryFunctionProps {
     const componentName = Object.keys(component)[0];
     const componentObject = Object.values(component)[0];
+
+    let transformedDecorators: Array<Decorator> = [];
+    if (decorators) {
+        transformedDecorators = decorators.map((decorator) =>
+            generateDecorator(decorator)
+        );
+    }
 
     // add book level description while taking care to not override other values
     // that might be set in the parameters object
@@ -99,6 +115,7 @@ export function book({
         component: componentObject,
         componentName,
         argTypes,
+        decorators: transformedDecorators,
         events,
         ...other,
     };
@@ -114,6 +131,14 @@ export function storyFunctionPropsToStoryProps({
     component,
     ...props
 }: StoryFunctionProps): StoryProps {
+    if (props.decorators && props.decorators.length) {
+        // filter out the non-string decorators and map them to the decorator
+        // type that storybook requires
+        props.decorators = (props.decorators as Array<string>)
+            .filter((decorator) => typeof decorator === 'string')
+            .map((decorator) => generateDecorator(decorator));
+    }
+
     let components = {};
     // if a name is provided for the component that is being tested, we know
     // it came from the book function and we can provide some sensible defaults
