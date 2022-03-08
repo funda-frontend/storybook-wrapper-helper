@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot tests should match the expected book results 1`] = `
+Object {
+  "argTypes": Object {
+    "close": Object {
+      "action": "close",
+    },
+    "objectProp": Object {
+      "description": "Documentation for an opaque object structure",
+    },
+    "showPrefix": Object {
+      "control": Object {
+        "type": "boolean",
+      },
+    },
+  },
+  "args": Object {
+    "key": "value",
+  },
+  "component": Object {
+    "example": "object",
+  },
+  "componentName": "ExampleObject",
+  "decorators": Array [
+    [Function],
+  ],
+  "events": Array [
+    "close",
+  ],
+  "parameters": Object {
+    "docs": Object {
+      "description": Object {
+        "component": "hello world
+### Links
+* <a href=\\"https://example.com\\" target=\\"_blank\\">link</a>",
+      },
+    },
+  },
+  "template": "
+            <ExampleObject v-bind=\\"$props\\" @close=\\"close\\">
+                Slot Content
+            </ExampleObject>",
+  "title": "Component/Path",
+}
+`;
+
+exports[`snapshot tests should match the story props results 1`] = `
+Object {
+  "argTypes": Object {
+    "close": Object {
+      "action": "close",
+    },
+    "objectProp": Object {
+      "description": "Documentation for an opaque object structure",
+    },
+    "showPrefix": Object {
+      "control": Object {
+        "type": "boolean",
+      },
+    },
+  },
+  "args": Object {
+    "key": "value",
+  },
+  "components": Object {
+    "AdditionalComponent": Object {
+      "additional": "component",
+    },
+    "ExampleObject": Object {
+      "example": "object",
+    },
+  },
+  "decorators": Array [
+    [Function],
+  ],
+  "links": Array [
+    Object {
+      "name": "link",
+      "value": "https://example.com",
+    },
+  ],
+  "parameters": Object {
+    "backgrounds": Object {
+      "default": "custom-blue",
+      "values": Array [
+        Object {
+          "name": "custom-blue",
+          "value": "#139ec1",
+        },
+      ],
+    },
+    "docs": Object {
+      "description": Object {
+        "story": "hello world
+### Links
+* <a href=\\"https://example.com\\" target=\\"_blank\\">link</a>",
+      },
+    },
+  },
+  "template": "
+            <ExampleObject v-bind=\\"$props\\" @close=\\"close\\">
+                Slot Content
+            </ExampleObject>",
+  "title": "Component/Path",
+}
+`;

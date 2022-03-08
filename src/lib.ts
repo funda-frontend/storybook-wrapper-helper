@@ -3,54 +3,19 @@ import {
     BookProps,
     Decorator,
     DefaultStoryProps,
-    LayoutOptions,
-    SelectOption,
     StoryFunctionProps,
     StoryParameters,
     StoryProps,
 } from './types';
-
-// pages should not have a padding around the edge to more closely represent
-// what the page is going to look like. This can be overwritten at the story
-// level.
-const defaultPageConfigurationValues = { layout: LayoutOptions.FullScreen };
-
-function isInPageFolder(title: string) {
-    return title.toLowerCase().slice(0, 4) === 'page';
-}
-
-// if a custom template is not provided, generate a template based on the
-// provided component name and events
-function generateTemplate({
-    componentName,
-    events,
-}: {
-    componentName: string;
-    events: Array<string>;
-}): string {
-    const eventsString = events
-        .map((event) => `@${event}="${event}"`)
-        .join(' ');
-    return `<${componentName} v-bind="$props" ${eventsString} />`;
-}
-
-function markdownLinks(links: Array<SelectOption>): string {
-    const linksHeader = '\n### Links\n';
-    const linksBody = links
-        .map(
-            (link) =>
-                `* <a href="${link.value}" target="_blank">${link.name}</a>`
-        )
-        .join('\n');
-    return linksHeader + linksBody;
-}
-
-// transform a string generator into the template storybook requires
-function generateDecorator(decoratorString) {
-    return () => ({
-        template: decoratorString,
-    });
-}
+import {
+    arrayHasContent,
+    defaultPageConfigurationValues,
+    generateDecorator,
+    generateTemplate,
+    isInPageFolder,
+    markdownLinks,
+    objectHasContent,
+} from './utils';
 
 /**
  * Generates the settings needed to create a book and settings to be passed
@@ -59,6 +24,12 @@ function generateDecorator(decoratorString) {
  *        organizational structure for your story
  * @param {Object} props.component - The component you will be testing. Only add
  *        a single component here (eg. { TestComponent })
+ * @param {String} props.description - Markdown that will be displayed in the
+ *        docs tab for the story.
+ * @param {Array} props.events - The name of the emissions from the component.
+ *        These emissions will automatically be logged in the actions tab.
+ * @param {Array} props.decorators - Content that will wrap every story in the
+ *        book.
  */
 export function book({
     component,
@@ -81,11 +52,10 @@ export function book({
 
     // add book level description while taking care to not override other values
     // that might be set in the parameters object
+    if (links) {
+        description += markdownLinks(links);
+    }
     if (description) {
-        if (links) {
-            description += markdownLinks(links);
-        }
-
         other.parameters = {
             ...other.parameters,
             docs: {
@@ -114,9 +84,12 @@ export function book({
     return {
         component: componentObject,
         componentName,
-        argTypes,
-        decorators: transformedDecorators,
-        events,
+        // conditionally add these values if they are defined
+        ...(arrayHasContent(events) && { events }),
+        ...(objectHasContent(argTypes) && { argTypes }),
+        ...(arrayHasContent(transformedDecorators) && {
+            decorators: transformedDecorators,
+        }),
         ...other,
     };
 }
@@ -129,6 +102,9 @@ export function book({
 export function storyFunctionPropsToStoryProps({
     componentName,
     component,
+    additionalComponents,
+    description,
+    events,
     ...props
 }: StoryFunctionProps): StoryProps {
     if (props.decorators && props.decorators.length) {
@@ -148,7 +124,7 @@ export function storyFunctionPropsToStoryProps({
         // testing. (eg. components: { ComponentName })
         const testingComponent = { [componentName]: component };
         // always allow the user to extend with additional components
-        components = { ...testingComponent, ...props.additionalComponents };
+        components = { ...testingComponent, ...additionalComponents };
 
         // if a template is not provided at the book or story level, then we can
         // assume the user just wants to include the component on its own and
@@ -157,14 +133,14 @@ export function storyFunctionPropsToStoryProps({
             props.template ||
             generateTemplate({
                 componentName: componentName,
-                events: props.events || [],
+                events,
             });
     }
 
     let parameters: StoryParameters = {};
-    if (props.description) {
+    if (description) {
         if (props.links) {
-            props.description += markdownLinks(props.links);
+            description += markdownLinks(props.links);
         }
 
         parameters = {
@@ -173,7 +149,7 @@ export function storyFunctionPropsToStoryProps({
                 ...props?.parameters?.docs,
                 description: {
                     ...props?.parameters?.docs?.description,
-                    story: props.description,
+                    story: description,
                 },
             },
         };
@@ -181,7 +157,11 @@ export function storyFunctionPropsToStoryProps({
 
     // do not pass along the componentName and component values as they are
     // now included in `components`
-    return { ...props, components, parameters };
+    return {
+        ...props,
+        components,
+        ...(objectHasContent(parameters) && { parameters }),
+    };
 }
 
 /**
