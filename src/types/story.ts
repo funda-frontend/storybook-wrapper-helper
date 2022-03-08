@@ -82,7 +82,7 @@ export interface DefaultStoryProps extends StoryFunctionProps {
 }
 
 export interface StoryProps
-    extends Exclude<
+    extends Omit<
         StoryFunctionProps,
         'component' | 'componentName' | 'additionalComponents'
     > {
