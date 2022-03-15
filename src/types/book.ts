@@ -12,6 +12,7 @@ export interface ParameterBookDescriptionProps {
 }
 
 export interface DesignObject {
+    name: string;
     type: string;
     url: string;
     allowFullscreen?: boolean;

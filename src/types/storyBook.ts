@@ -9,6 +9,7 @@ export interface ArgTypes {
 export interface ArgType {
     control: ArgTypeControl;
     description: string;
+    action: string;
     name: string;
     options: Array<string>;
     table: Partial<ArgTypeTable>;
