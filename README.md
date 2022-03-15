@@ -28,7 +28,7 @@ All configuration here is built from functional components, so a developer
 will be able to easily debug any storybook configuration by seeing the
 output of each of these functions. While the helper functions could further
 abstract a storybook implementation, this crosses a line where obfuscation
-begins to be a hinderende when a developer is debugging, or joining this
+begins to be a hinderance when a developer is debugging, or joining this
 project for the first time.
 
 ### Single story book
@@ -38,7 +38,7 @@ Any information that you need in your story needs to be added as parameters to
 the story function.
 
 ```js
-import { story, book } from '@funda/storybook-config';
+import { story, book } from '@funda/storybook-wrapper-helper';
 
 // import your component that you are going to test
 import SaveBox from '../SaveBox.vue';
@@ -65,7 +65,7 @@ export const Default = story({
 ### Multi-story book
 
 ```js
-import { defaultStory, book } from '@funda/storybook-config';
+import { defaultStory, book } from '@funda/storybook-wrapper-helper';
 
 // import your component that you are going to test
 import UiUploadButton from '../UiUploadButton.vue';
@@ -151,7 +151,7 @@ This is an example of a component that makes use of every option in the `story`
 function configuration.
 
 ```js
-import { story, book } from '@funda/storybook-config';
+import { story, book } from '@funda/storybook-wrapper-helper';
 
 // import your component that you are going to test
 import SaveBox from '../SaveBox.vue';
@@ -216,7 +216,7 @@ export const Default = story({
 ### Automatic features
 
 If you specify a book that has a title that starts with `page` (case
-insensitive), the layout of the story will be fullscreen to closer emulate
+insensitive), the layout of the story will be full screen to closer emulate
 what the page will look like (especially on mobile devices). This can be
 overwritten at the story level.
 
@@ -273,7 +273,7 @@ Simply following the commitlint standard and merging your changes into main will
 
 ## Consuming the package locally
 
-If don't want to publish a new version and you just want to test it locally you can use `npm run link-local` on the package and then `npm link @fundarealestate/fuic-template` on the project.
+If don't want to publish a new version and you just want to test it locally you can use `npm run link-local` on the package and then `npm link @funda/storybook-wrapper-helper` on the project.
 
 Keep in mind that some tools don't understand file symlink (what npm link uses) and that can cause problems.
 
