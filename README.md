@@ -82,7 +82,7 @@ export const Default = story({
 ### Multi-story book
 
 ```js
-import { defaultStory, book } from '@funda/storybook-wrapper-helper';
+import { story, defaultStory, book } from '@funda/storybook-wrapper-helper';
 
 // import your component that you are going to test
 import UiUploadButton from '../UiUploadButton.vue';
