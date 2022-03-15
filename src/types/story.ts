@@ -1,5 +1,10 @@
-import { AnyObject, CustomWrapperProps, VueComponents, VuexStore } from '.';
-import { BookParameters } from './book';
+import {
+    AnyObject,
+    BookParameters,
+    CustomWrapperProps,
+    VueComponents,
+    VuexStore,
+} from '.';
 
 export enum LayoutOptions {
     Centered = 'centered',
@@ -64,10 +69,15 @@ export interface StoryTemplate {
     template: string;
 }
 
+export interface DefaultArgs {
+    defaultArgs?: AnyObject;
+}
+
 export type Decorator = () => StoryTemplate;
 
 export interface StoryFunctionProps
     extends Partial<StoryTemplate>,
+        DefaultArgs,
         CustomWrapperProps {
     argTypes?: ArgTypes;
     additionalComponents?: VueComponents;
@@ -79,8 +89,8 @@ export interface StoryFunctionProps
 }
 
 export interface DefaultStoryProps
-    extends Omit<StoryFunctionProps, 'parameters' | 'description' | 'links'> {
-    defaultArgs?: AnyObject;
+    extends DefaultArgs,
+        Omit<StoryFunctionProps, 'parameters' | 'description' | 'links'> {
     defaultParameters?: StoryParameters;
     defaultTemplate?: string;
     parameters?: BookParameters | StoryParameters;

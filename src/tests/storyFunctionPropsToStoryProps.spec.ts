@@ -51,4 +51,12 @@ describe('storyFunctionPropsToStoryProps', () => {
             description
         );
     });
+
+    it('should merge book defaultArgs with story args', () => {
+        const result = setup({
+            defaultArgs: { key: 'value' },
+            args: { item: 1 },
+        });
+        expect(result.args).toEqual({ key: 'value', item: 1 });
+    });
 });

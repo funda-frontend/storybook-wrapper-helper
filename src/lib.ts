@@ -104,6 +104,8 @@ export function storyFunctionPropsToStoryProps({
     component,
     additionalComponents,
     description,
+    defaultArgs,
+    args,
     events,
     ...props
 }: StoryFunctionProps): StoryProps {
@@ -159,6 +161,7 @@ export function storyFunctionPropsToStoryProps({
     // now included in `components`
     return {
         ...props,
+        args: { ...defaultArgs, ...args },
         components,
         ...(objectHasContent(parameters) && { parameters }),
     };
