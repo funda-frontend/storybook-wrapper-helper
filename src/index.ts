@@ -8,3 +8,4 @@
  */
 
 export * from './lib';
+export { withDesign } from 'storybook-addon-designs';

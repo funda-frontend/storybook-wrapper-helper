@@ -11,6 +11,13 @@ export interface ParameterBookDescriptionProps {
     component?: string;
 }
 
+export interface DesignObject {
+    type: string;
+    url: string;
+    allowFullscreen?: boolean;
+    embedHost?: string;
+}
+
 export interface ParameterBookDocsProps {
     description?: ParameterBookDescriptionProps;
 }
@@ -19,6 +26,7 @@ export interface BookParameters
     extends Pick<StoryParameters, 'layout' | 'backgrounds'> {
     componentSubtitle?: string;
     docs?: ParameterBookDocsProps;
+    design?: Array<DesignObject> | DesignObject;
 }
 export interface BookProps
     extends CustomWrapperProps,

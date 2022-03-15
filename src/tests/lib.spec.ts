@@ -116,6 +116,18 @@ describe('snapshot tests', () => {
         component: { ExampleObject },
         decorators: ['<div><story/></div>'],
         description: 'hello world',
+        parameters: {
+            design: [
+                {
+                    type: 'figma',
+                    url: 'https://www.figma.com/file/file-key',
+                },
+                {
+                    type: 'link',
+                    url: 'https://www.figma.com/file/file-key-2',
+                },
+            ],
+        },
         links: [{ name: 'link', value: 'https://example.com' }],
         events: ['close'],
         template: `
@@ -145,6 +157,10 @@ describe('snapshot tests', () => {
             description: 'hello world',
             links: [{ name: 'link', value: 'https://example.com' }],
             parameters: {
+                design: {
+                    type: 'figma',
+                    url: 'https://www.figma.com/file/file-key-3',
+                },
                 backgrounds: {
                     default: 'custom-blue',
                     values: [

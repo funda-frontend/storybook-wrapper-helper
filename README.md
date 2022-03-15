@@ -1,5 +1,22 @@
 # Storybook wrapper helper
 
+## Installation
+
+1. `npm install --save-dev @funda/storybook-wrapper-helper` (depending on your
+   project configuration, you may want to install this as a regular dependency)
+1. register the 'storybook-addon-designs' addon in storybook main.js
+1. import `story` and `book` functions in your story and follow the
+   [usage docs](#usage)
+
+Register storybook addon example
+
+```js
+// main.js
+module.exports = {
+  addons: ['storybook-addon-designs'],
+}
+```
+
 ## Why?
 
 Why where these wrapper components created?
@@ -163,11 +180,21 @@ const bookSettings = book({
     component: { SaveBox },
     // when @close and @save are triggered, it will be logged in the actions pane
     events: ['close', 'save'],
+    design: [
+        {
+            type: 'figma',
+            url: 'https://www.figma.com/file/file-key',
+        },
+        {
+            type: 'link',
+            url: 'https://www.figma.com/file/file-key-2',
+        },
+    ],
     description: "A save box for an advertisement",
     links: [
       {
-        name: "Design",
-        value: "https://figma.com/your-project/advertisement/design/document"
+        name: "Business requirements document",
+        value: "https://intranet.funda.nl/example/SaveBox/documentation"
       },
     ],
     // add a little bit of margin around all our stories

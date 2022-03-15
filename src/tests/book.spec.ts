@@ -1,3 +1,4 @@
+import { withDesign } from 'storybook-addon-designs';
 import { book } from '../lib';
 
 const ExampleObject = { example: 'object' };
@@ -62,6 +63,30 @@ describe('book', () => {
         const result = setup({ defaultArgs });
 
         expect(result.defaultArgs).toEqual(defaultArgs);
+    });
+
+    describe('when using design decorator', () => {
+        const design = { type: 'figma', url: 'https://example.com' };
+
+        it('should add the withDesign decorator when given a design object', () => {
+            const result = setup({
+                parameters: { design },
+            });
+
+            expect(result.decorators?.length).toEqual(1);
+            expect((result.decorators as Array<any>)[0]).toEqual(withDesign);
+        });
+
+        it('should add the withDesign decorator when given a design array', () => {
+            const result = setup({
+                parameters: {
+                    design: [design],
+                },
+            });
+
+            expect(result.decorators?.length).toEqual(1);
+            expect((result.decorators as Array<any>)[0]).toEqual(withDesign);
+        });
     });
 
     describe('when testing a page component', () => {
