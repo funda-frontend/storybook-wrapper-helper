@@ -15,9 +15,6 @@ Object {
       },
     },
   },
-  "args": Object {
-    "key": "value",
-  },
   "component": Object {
     "example": "object",
   },
@@ -25,6 +22,9 @@ Object {
   "decorators": Array [
     [Function],
   ],
+  "defaultArgs": Object {
+    "key": "value",
+  },
   "events": Array [
     "close",
   ],
@@ -61,6 +61,7 @@ Object {
     },
   },
   "args": Object {
+    "item": 1,
     "key": "value",
   },
   "components": Object {

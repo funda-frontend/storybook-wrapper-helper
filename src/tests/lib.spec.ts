@@ -112,7 +112,7 @@ describe('storyFunctionPropsToStoryProps', () => {
 describe('snapshot tests', () => {
     const bookSettings = book({
         title: 'Component/Path',
-        args: { key: 'value' },
+        defaultArgs: { key: 'value' },
         component: { ExampleObject },
         decorators: ['<div><story/></div>'],
         description: 'hello world',
@@ -140,6 +140,7 @@ describe('snapshot tests', () => {
         const result = storyFunctionPropsToStoryProps({
             ...bookSettings,
             additionalComponents: { AdditionalComponent },
+            args: { item: 1 },
             decorators: ['<p><story/></p>'],
             description: 'hello world',
             links: [{ name: 'link', value: 'https://example.com' }],

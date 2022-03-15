@@ -1,5 +1,6 @@
 import {
     AnyObject,
+    DefaultArgs,
     CustomWrapperProps,
     StoryFunctionProps,
     StoryParameters,
@@ -21,7 +22,8 @@ export interface BookParameters
 }
 export interface BookProps
     extends CustomWrapperProps,
-        Omit<Partial<StoryFunctionProps>, 'decorators'> {
+        Omit<Partial<StoryFunctionProps>, 'decorators'>,
+        DefaultArgs {
     component: VueComponent;
     // since we pass the results of the book function into the story functions,
     // storybook will think that we would like the decorator to be applied both

@@ -57,6 +57,13 @@ describe('book', () => {
         );
     });
 
+    it('should allow defaultArgs to pass through', () => {
+        const defaultArgs = { key: 'value' };
+        const result = setup({ defaultArgs });
+
+        expect(result.defaultArgs).toEqual(defaultArgs);
+    });
+
     describe('when testing a page component', () => {
         const storyTitle = { title: 'Page/content' };
 
