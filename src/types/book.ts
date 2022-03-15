@@ -1,5 +1,5 @@
 import {
-    AnyObject,
+    ArgTypes,
     DefaultArgs,
     CustomWrapperProps,
     StoryFunctionProps,
@@ -43,5 +43,5 @@ export interface BookProps
     title?: string;
     // since we have a fallback layout, no need to make the layout optional
     parameters?: BookParameters;
-    argTypes?: AnyObject;
+    argTypes?: ArgTypes;
 }

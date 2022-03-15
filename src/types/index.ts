@@ -2,6 +2,7 @@ import { SelectOption } from './story';
 
 export * from './book';
 export * from './story';
+export * from './storyBook';
 
 // this is overly permissive and should be removed wherever possible
 export type AnyObject = {

@@ -1,52 +1,18 @@
 import {
     AnyObject,
+    ArgTypes,
     BookParameters,
     CustomWrapperProps,
+    LayoutOptions,
     VueComponents,
     VuexStore,
 } from '.';
-
-export enum LayoutOptions {
-    Centered = 'centered',
-    FullScreen = 'fullscreen',
-}
-
-export enum ControlTypes {
-    Boolean = 'boolean',
-    Number = 'number',
-    Range = 'range',
-    Object = 'object',
-    File = 'file',
-    Radio = 'radio',
-    Check = 'check',
-    Select = 'select',
-    Text = 'text',
-    Color = 'color',
-    Date = 'date',
-    InlineRadio = 'inline-radio',
-    InlineCheck = 'inline-check',
-    MultiSelect = 'multi-select',
-}
 
 export interface SelectOption {
     name: string;
     value: string;
 }
 
-export interface ArgTypes {
-    [x: string]: ArgTypeContents;
-}
-
-export interface ArgTypeContents extends ParameterDescriptionProps {
-    control?: ArgTypeControl;
-}
-
-export interface ArgTypeControl {
-    type: ControlTypes;
-    min?: number;
-    max?: number;
-    step?: number;
-}
 export interface BackgroundOptions {
     default: string;
     values?: Array<SelectOption>;
@@ -59,6 +25,7 @@ export interface ParameterDescriptionProps {
 export interface ParameterDocsProps {
     description?: ParameterDescriptionProps;
 }
+
 export interface StoryParameters {
     layout?: LayoutOptions;
     backgrounds?: BackgroundOptions;
@@ -86,6 +53,8 @@ export interface StoryFunctionProps
     componentName?: string;
     parameters?: BookParameters;
     store?: VuexStore;
+    // object of any keys holding the value of any kind of function
+    methods?: any;
 }
 
 export interface DefaultStoryProps
