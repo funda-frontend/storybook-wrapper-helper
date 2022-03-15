@@ -21,6 +21,7 @@ Object {
   "componentName": "ExampleObject",
   "decorators": Array [
     [Function],
+    [Function],
   ],
   "defaultArgs": Object {
     "key": "value",
@@ -29,6 +30,16 @@ Object {
     "close",
   ],
   "parameters": Object {
+    "design": Array [
+      Object {
+        "type": "figma",
+        "url": "https://www.figma.com/file/file-key",
+      },
+      Object {
+        "type": "link",
+        "url": "https://www.figma.com/file/file-key-2",
+      },
+    ],
     "docs": Object {
       "description": Object {
         "component": "hello world
@@ -74,6 +85,7 @@ Object {
   },
   "decorators": Array [
     [Function],
+    [Function],
   ],
   "links": Array [
     Object {
@@ -90,6 +102,10 @@ Object {
           "value": "#139ec1",
         },
       ],
+    },
+    "design": Object {
+      "type": "figma",
+      "url": "https://www.figma.com/file/file-key-3",
     },
     "docs": Object {
       "description": Object {

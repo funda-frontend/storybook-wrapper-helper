@@ -1,3 +1,4 @@
+import { withDesign } from 'storybook-addon-designs';
 import {
     BookParameters,
     BookProps,
@@ -48,6 +49,10 @@ export function book({
         transformedDecorators = decorators.map((decorator) =>
             generateDecorator(decorator)
         );
+    }
+
+    if (other.parameters?.design) {
+        transformedDecorators.push(withDesign);
     }
 
     // add book level description while taking care to not override other values
@@ -104,17 +109,20 @@ export function storyFunctionPropsToStoryProps({
     component,
     additionalComponents,
     description,
+    decorators = [],
     defaultArgs,
     args,
     events,
     ...props
 }: StoryFunctionProps): StoryProps {
-    if (props.decorators && props.decorators.length) {
-        // filter out the non-string decorators and map them to the decorator
-        // type that storybook requires
-        props.decorators = (props.decorators as Array<string>)
-            .filter((decorator) => typeof decorator === 'string')
-            .map((decorator) => generateDecorator(decorator));
+    // filter out the non-string decorators and map them to the decorator
+    // type that storybook requires
+    decorators = (decorators as Array<string>)
+        .filter((decorator) => typeof decorator === 'string')
+        .map((decorator) => generateDecorator(decorator));
+
+    if (props.parameters?.design) {
+        (decorators as Array<Decorator>).push(withDesign);
     }
 
     let components = {};
@@ -161,6 +169,7 @@ export function storyFunctionPropsToStoryProps({
     // now included in `components`
     return {
         ...props,
+        decorators,
         args: { ...defaultArgs, ...args },
         components,
         ...(objectHasContent(parameters) && { parameters }),
