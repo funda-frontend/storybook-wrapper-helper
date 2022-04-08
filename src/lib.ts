@@ -12,6 +12,7 @@ import {
     arrayHasContent,
     defaultPageConfigurationValues,
     generateDecorator,
+    generateFunctionName,
     generateTemplate,
     isInPageFolder,
     markdownLinks,
@@ -83,7 +84,8 @@ export function book({
 
     // binding events
     events?.forEach((event) => {
-        argTypes[event] = { action: `${event}` };
+        const key = generateFunctionName(event);
+        argTypes[key] = { action: `${event}` };
     });
 
     return {
