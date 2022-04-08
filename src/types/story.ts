@@ -37,6 +37,7 @@ export interface StoryTemplate {
 }
 
 export interface DefaultArgs {
+    debug?: boolean;
     defaultArgs?: AnyObject;
 }
 

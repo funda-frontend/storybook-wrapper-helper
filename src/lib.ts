@@ -34,6 +34,7 @@ import {
  *        book.
  */
 export function book({
+    debug = false,
     component,
     events,
     argTypes = {},
@@ -88,7 +89,7 @@ export function book({
         argTypes[key] = { action: `${event}` };
     });
 
-    return {
+    const output = {
         component: componentObject,
         componentName,
         // conditionally add these values if they are defined
@@ -99,6 +100,12 @@ export function book({
         }),
         ...other,
     };
+
+    if (debug) {
+        console.log('book output: ', output);
+    }
+
+    return output;
 }
 
 /**
@@ -107,6 +114,7 @@ export function book({
  * allow developers to inspect how a story is built.
  */
 export function storyFunctionPropsToStoryProps({
+    debug = false,
     componentName,
     component,
     additionalComponents,
@@ -169,13 +177,19 @@ export function storyFunctionPropsToStoryProps({
 
     // do not pass along the componentName and component values as they are
     // now included in `components`
-    return {
+    const output = {
         ...props,
         decorators,
         args: { ...defaultArgs, ...args },
         components,
         ...(objectHasContent(parameters) && { parameters }),
     };
+
+    if (debug) {
+        console.log('storyFunctionPropsToStoryProps output: ', output);
+    }
+
+    return output;
 }
 
 /**
@@ -208,6 +222,18 @@ export function story(props: StoryFunctionProps) {
     storyExport.args = newProps.args;
     storyExport.decorators = newProps.decorators;
     storyExport.parameters = newProps.parameters;
+
+    if (props.debug) {
+        const ouput = {
+            template: newProps.template,
+            ...newProps,
+            args: newProps.args,
+            decorators: newProps.decorators,
+            parameters: newProps.parameters,
+        };
+        console.log('story output: ', ouput);
+    }
+
     return storyExport;
 }
 
@@ -232,6 +258,7 @@ export function story(props: StoryFunctionProps) {
  * @returns A function that generates a story.
  */
 export function defaultStory({
+    debug = false,
     defaultArgs,
     defaultParameters,
     defaultTemplate,
@@ -252,5 +279,10 @@ export function defaultStory({
         // not supplied
         template: template || defaultTemplate,
     };
+
+    if (debug) {
+        console.log(`defaultStory output: story(${options})`);
+    }
+
     return story(options);
 }
