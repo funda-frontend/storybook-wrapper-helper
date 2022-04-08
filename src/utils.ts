@@ -1,3 +1,4 @@
+import { camelCase } from 'change-case';
 import { LayoutOptions, SelectOption } from './types';
 
 /**
@@ -13,6 +14,10 @@ export function isInPageFolder(title: string) {
     return title.toLowerCase().slice(0, 4) === 'page';
 }
 
+export function generateFunctionName(input) {
+    return camelCase(input);
+}
+
 /**
  * Storybook always needs a template for vue components, but in most cases, they
  * are just going to be the name of the component and include bindings for props
@@ -26,7 +31,7 @@ export function generateTemplate({
     events?: Array<string>;
 }): string {
     const eventsString = events
-        .map((event) => `@${event}="${event}"`)
+        .map((event) => `@${event}="${generateFunctionName(event)}"`)
         .join(' ');
 
     let str = `<${componentName} v-bind="$props"`;

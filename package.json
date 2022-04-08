@@ -64,6 +64,7 @@
   },
   "dependencies": {
     "@storybook/addons": "^6.4.19",
+    "change-case": "^4.1.2",
     "storybook-addon-designs": "^6.2.1"
   }
 }

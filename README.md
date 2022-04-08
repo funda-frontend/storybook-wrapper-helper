@@ -179,7 +179,7 @@ const bookSettings = book({
     title: 'Advertisement/Create/Save Box',
     component: { SaveBox },
     // when @close and @save are triggered, it will be logged in the actions pane
-    events: ['close', 'save'],
+    events: ['close', 'save', 'mouse-in-zone'],
     design: [
         {
             type: 'figma',
@@ -233,7 +233,12 @@ export const Default = story({
     // SaveBox component. Note that the props and actions must be bound in this
     // template or you will disconnect them from the story.
     template: `
-      <SaveBox v-bind="$props" @close="close" @save="save">
+      <SaveBox
+        v-bind="$props"
+        @close="close"
+        @save="save"
+        @mouse-in-zone="mouseInZone"
+     >
         <SuccessNotification>You did it!</SuccessNotification>
       </SaveBox>
     `
