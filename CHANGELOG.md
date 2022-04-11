@@ -1,3 +1,16 @@
+# [2.1.0](https://github.com/funda-frontend/storybook-wrapper-helper/compare/v2.0.0...v2.1.0) (2022-04-11)
+
+
+### Bug Fixes
+
+* add missing props in typescript ([361b8f3](https://github.com/funda-frontend/storybook-wrapper-helper/commit/361b8f39cd276531c8dcc07d6f3d43ae38120341))
+* properly transform multi-word events ([a3f4b50](https://github.com/funda-frontend/storybook-wrapper-helper/commit/a3f4b50b8fdde94f591b161f4a20ffb91923362c))
+
+
+### Features
+
+* add support for debug props in functions ([4d371c8](https://github.com/funda-frontend/storybook-wrapper-helper/commit/4d371c84a29318bd6739e1109136f204e6852aa2))
+
 # [2.0.0](https://github.com/funda-frontend/storybook-wrapper-helper/compare/v1.1.0...v2.0.0) (2022-03-15)
 
 

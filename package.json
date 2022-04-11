@@ -1,7 +1,7 @@
 {
   "name": "@funda/storybook-wrapper-helper",
   "description": "storybook warpper helper",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "files": [
     "dist",
     "README.md"
