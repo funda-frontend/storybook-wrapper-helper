@@ -52,7 +52,7 @@
     "jest": "^27.3.1",
     "lint-staged": "^11.2.6",
     "prettier": "^2.4.1",
-    "semantic-release": "^18.0.0",
+    "semantic-release": "^19.0.3",
     "vite": "^2.8.6",
     "vite-plugin-dts": "^0.9.10"
   },
